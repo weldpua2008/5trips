@@ -12,7 +12,8 @@ Due to the danger outside, DY's new CSO (chief security officer) has decreed tha
 * For the employees' sake, you'll only allow them to choose from stations that share a line with the destination station.
 
 ## Required output:
-* A git repository containing Vagrant configuration that serves the application on port `8080` on the host (see [port redirection](https://docs.vagrantup.com/v2/networking/forwarded_ports.html))
+* A git repository containing Vagrant configuration that serves the application on port `8080` on the host (see [port redirection](https://docs.vagrantup.com/v2/networking/forwarded_ports.html)).  
+    It's supposed to be a fork of this, but if you're feeling really creative you can make your own.
 * The repository should contain the application code as well
 * The creation of the machine (using `vagrant up`) should end in the application ready - no manual steps
 * Reprovisioning the machine (`vagrant provision` for example) will cause the app to serve the latest DB data (see below)
