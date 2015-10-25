@@ -6,7 +6,7 @@ Due to the danger outside, DY's new CSO (chief security officer) has decreed tha
 ## App description:
 * You have two hardcoded parameters (config file):
   * Time of arrival: `10:00`. All employees are to arrive at the station as late as possible, BEFORE that time
-  * Station ID: `13031`. This is the station ID according to the metal sign outside AND NOT the internal identifier in the DB.
+  * Station: `13031` (`בן יהודה/שלום עליכם‎`). This is the station number according to the metal sign outside AND NOT the internal identifier in the DB.
 * For your sake, the application only handles single-line trips. No switchovers.
 * The application should allow each emploee to specify his origin station and show them the 5 trips that leave their station and arrive at work before the TOA specified in the config file.
 * For the employees' sake, you'll only allow them to choose from stations that share a line with the destination station.
