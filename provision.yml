@@ -17,6 +17,12 @@
       - "python-mysqldb"
       - "uwsgi"
 
+  - name: Copying init
+    shell: rm -f /etc/init/app.conf;cp -f /tmp/5trips/app.conf /etc/init/app.conf
+
+  - name: Copying application
+    shell: mkdir -p /app/; rm -f /app/*.py; cp -f /tmp/5trips/*.py /app
+
   - file:
       path: /var/lib/gtfs
       state: absent
