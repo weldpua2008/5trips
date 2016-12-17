@@ -1,7 +1,7 @@
 import falcon
 import json
 import MySQLdb
-
+import yaml
 
 __author__ = 'weldpua2008@gmail.com'
 
@@ -10,6 +10,34 @@ db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
                      passwd="",  # your password
                      db="5trips")        # name of the data base
+
+TOA_HOURS = '10'
+TOA_SECONDS = '0'
+Station = 13031
+
+try:
+    with open("/app/settings.yml", 'r') as stream:
+        try:
+            settings = yaml.load(stream)
+            try:
+                if 'toa' in settings:
+                    TOA = settings['toa']
+                    TOA_HOURS = TOA.split(":")[0]
+                    TOA_SECONDS = TOA.split(":")[1]
+            except Exception:
+                pass
+
+            try:
+                if 'station' in settings:
+                    Station = settings['station']
+            except Exception:
+                pass
+
+        except yaml.YAMLError as exc:
+            pass
+except Exception:
+    pass
+
 
 class QuoteResource:
     def on_get(self, req, resp):
@@ -29,8 +57,8 @@ class QuoteResource:
             'quote': 'I\'ve always been more interested in the future than in the past.',
             'author': 'Grace Hopper'
         }
-
-        resp.body = json.dumps(quote)
+        resp.content_type = 'application/x-yaml'
+        resp.body = yaml.dumps(quote)
 
 api = falcon.API()
 api.add_route('/quote', QuoteResource())
