@@ -1,0 +1,15 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    http_port: 80
+  remote_user: root
+  tasks:
+#  - name: update apt cache
+#    apt: update_cache=yes cache_valid_time=8600
+
+  - name: installing mysql
+    apt: name={{item}} state=present update_cache=yes cache_valid_time=9600
+    with_items:
+      - "mysql-server"
+
