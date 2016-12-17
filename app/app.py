@@ -6,10 +6,6 @@ import yaml
 __author__ = 'weldpua2008@gmail.com'
 
 
-db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-                     user="root",         # your username
-                     passwd="",  # your password
-                     db="5trips")        # name of the data base
 
 TOA_HOURS = '10'
 TOA_SECONDS = '0'
@@ -42,6 +38,10 @@ except Exception:
 class QuoteResource:
     def on_get(self, req, resp):
         """Handles GET requests"""
+        # db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+        #                      user="root",         # your username
+        #                      passwd="",  # your password
+        #                      db="5trips")        # name of the data base
 
         # cur = db.cursor()
         #
@@ -57,8 +57,8 @@ class QuoteResource:
             'quote': 'I\'ve always been more interested in the future than in the past.',
             'author': 'Grace Hopper'
         }
-        resp.content_type = 'application/x-yaml'
-        resp.body = yaml.dumps(quote)
+        # resp.content_type = 'application/x-yaml'
+        resp.body = yaml.dump(quote,default_flow_style=False)
 
 api = falcon.API()
 api.add_route('/quote', QuoteResource())
