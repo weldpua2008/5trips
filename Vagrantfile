@@ -55,6 +55,8 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision :file, source: './', destination: "/tmp/5trips"
 
+  config.vm.provision :file, source: './app.conf', destination: "/etc/init/app.conf"
+
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provision.yml"
   end
