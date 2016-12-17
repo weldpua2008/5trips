@@ -23,19 +23,21 @@
   - name: Copying application
     shell: mkdir -p /app/; rm -f /app/*.py; cp -f /tmp/5trips/app/*.py /app
 
-  - file:
-      path: /var/lib/gtfs
-      state: absent
-      mode: 0755
+#  - file:
+#      path: /var/lib/gtfs
+#      state: absent
+#      mode: 0755
+#
+#  - file:
+#      path: /var/lib/gtfs
+#      state: directory
+#      mode: 0755
 
-  - file:
-      path: /var/lib/gtfs
-      state: directory
-      mode: 0755
+  - name: Getfile
+    get_url: url="ftp://gtfs.mot.gov.il/israel-public-transportation.zip" dest="/tmp/israel-public-transportation.zip"
 
-  - unarchive:
-      src: "ftp://gtfs.mot.gov.il/israel-public-transportation.zip"
-      dest: /var/lib/gtfs
+  - name: Extracting files
+    shell: unzip /tmp/israel-public-transportation.zip -d /var/lib/gtfs
 
   - name: Installing Aplication python dependencies
     pip: name={{item}} state=present
