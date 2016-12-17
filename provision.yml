@@ -46,3 +46,15 @@
     pip: name={{item}} state=present
     with_items:
       - "falcon"
+
+
+  - name: Creating database
+    shell: /usr/bin/mysql -uroot  -e "CREATE DATABASE IF NOT EXISTS gtfs;"
+
+  - name: Import schema
+    shell: /usr/bin/mysql -uroot gtfs < /tmp/5trips/sql/schema.txt
+    ignore_errors: yes
+
+#  - name: Import schema
+#    shell: /usr/bin/mysql -uroot gtfs < /tmp/5trips/sql/schema.txt
+#    ignore_errors: yes

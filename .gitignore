@@ -1,6 +1,6 @@
 /.vagrant
 *.zip
-*.txt
+#*.txt
 .idea/
 # User-specific stuff:
 .idea/workspace.xml
