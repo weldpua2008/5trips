@@ -40,7 +40,7 @@
     get_url: url="ftp://gtfs.mot.gov.il/israel-public-transportation.zip" dest="/tmp/israel-public-transportation.zip"
 
   - name: Extracting files
-    shell: rm -rf /var/lib/gtfs; mkdir -p /var/lib/gtfs;unzip /tmp/israel-public-transportation.zip -d /var/lib/gtfs
+    shell: rm -rf /var/lib/gtfs; mkdir -p /var/lib/gtfs;unzip -o /tmp/israel-public-transportation.zip -d /var/lib/gtfs
 
   - name: Installing Aplication python dependencies
     pip: name={{item}} state=present
@@ -55,6 +55,14 @@
     shell: /usr/bin/mysql -uroot gtfs < /tmp/5trips/sql/schema.txt
     ignore_errors: yes
 
-#  - name: Import schema
-#    shell: /usr/bin/mysql -uroot gtfs < /tmp/5trips/sql/schema.txt
-#    ignore_errors: yes
+  - name: Import data
+    shell: /usr/bin/mysql -uroot gtfs --enable-local-infile  -e"LOAD DATA LOCAL INFILE '{{item.path}}' INTO TABLE {{item.table}} FIELDS TERMINATED BY ',' ;"
+#
+#    --local_infile=1 -e "use gtfs" -e"LOAD DATA LOCAL INFILE '{{item.path}}'
+#        IGNORE INTO TABLE {{item.table}}
+#        FIELDS TERMINATED BY '\t'
+#        OPTIONALLY ENCLOSED BY '\"'"
+
+    with_items:
+      - { path: "/var/lib/gtfs/agency.txt", table: "agency" }
+    ignore_errors: yes
