@@ -53,6 +53,7 @@ Vagrant.configure(2) do |config|
      vb.cpus = "2"
 #     vb.boot_timeout = 600
   end
+  config.vm.provision "shell", inline: "rm -rf /tmp/5trips|| true"
   config.vm.provision :file, source: './', destination: "/tmp/5trips"
 
   #config.vm.provision :file, source: './app.conf', destination: "/etc/init/app.conf"

@@ -21,7 +21,7 @@
     shell: rm -f /etc/init/app.conf;cp -f /tmp/5trips/app.conf /etc/init/app.conf
 
   - name: Copying application
-    shell: mkdir -p /app/; rm -f /app/*.py; cp -f /tmp/5trips/*.py /app
+    shell: mkdir -p /app/; rm -f /app/*.py; cp -f /tmp/5trips/app/*.py /app
 
   - file:
       path: /var/lib/gtfs
@@ -34,7 +34,7 @@
       mode: 0755
 
   - unarchive:
-      src: ftp://gtfs.mot.gov.il/israel-public-transportation.zip
+      src: "ftp://gtfs.mot.gov.il/israel-public-transportation.zip"
       dest: /var/lib/gtfs
 
   - name: Installing Aplication python dependencies
