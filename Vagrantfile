@@ -60,6 +60,9 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provision.yml"
+    ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
+    ansible.sudo = true
+    #ansible.verbose = 'vvvv'
   end
 
   #

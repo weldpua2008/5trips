@@ -65,4 +65,5 @@
 
     with_items:
       - { path: "/var/lib/gtfs/agency.txt", table: "agency" }
+#      - { path: "/var/lib/gtfs/agency.txt", table: "agency" }
     ignore_errors: yes
