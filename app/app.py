@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import falcon
 import json
 import MySQLdb
@@ -42,30 +44,41 @@ except Exception:
 class Stations(object):
     def on_get(self, req, resp, station=None):
         """Handles GET requests"""
-        db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-                             user="root",         # your username
-                             db=DATABASE)        # name of the data base
-        #passwd="",  # your password
-        cur = db.cursor()
+        msg = { "total_trips": 0, "error": False, "error_msg": ""}
+        try:
+            db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+                                 user="root",         # your username
+                                 db=DATABASE)        # name of the data base
+            #passwd="",  # your password
+            cur = db.cursor()
 
-        # Use all the SQL you like
-        cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
+            # Use all the SQL you like
+            numrows = cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
 
-        msg = []
+            if numrows > 0:
+                numrows = cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
+                # print all the first cell of all the rows
+                indx=0
+                for row in cur.fetchall():
+                    indx += 1
+                    msg["trip%s" % indx ] = row[0]
+                    if indx > 5:
+                        break
 
-        # print all the first cell of all the rows
-        for row in cur.fetchall():
-            print row[0]
-            msg.append(row)
+                resp.status = falcon.HTTP_200
+            else:
+                resp.status = falcon.HTTP_404
 
-        db.close()
+            db.close()
+        except Exception as error:
+            msg["error_msg"] = "%s" % error
+            msg["error"] = True
         # quote = {
         #     'quote': 'I\'ve always been more interested in the future than in the past.',
         #     'author': 'Grace Hopper'
         # }
         resp.content_type = 'application/x-yaml'
         resp.body = yaml.dump(msg, default_flow_style=False)
-
 
 class FileLoader(object):
 
