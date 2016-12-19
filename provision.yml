@@ -65,5 +65,11 @@
 
     with_items:
       - { path: "/var/lib/gtfs/agency.txt", table: "agency" }
-#      - { path: "/var/lib/gtfs/agency.txt", table: "agency" }
+      - { path: "/var/lib/gtfs/trips.txt", table: "trips" }
+      - { path: "/var/lib/gtfs/routes.txt", table: "routes" }
+      - { path: "/var/lib/gtfs/calendar.txt", table: "calendar" }
+      - { path: "/var/lib/gtfs/shapes.txt", table: "shapes" }
+      - { path: "/var/lib/gtfs/stops.txt", table: "stops" }
+      - { path: "/var/lib/gtfs/stop_times.txt", table: "stop_times" }
+#      - { path: "/var/lib/gtfs/translations.txt", table: "translations" }
     ignore_errors: yes
