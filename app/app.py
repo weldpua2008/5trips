@@ -12,6 +12,8 @@ __author__ = 'weldpua2008@gmail.com'
 TOA_HOURS = '10'
 TOA_SECONDS = '0'
 Station = 13031
+DATABASE = "gtfs"
+STOPS_TABLE = "stops"
 
 try:
     with open("/app/settings.yml", 'r') as stream:
@@ -40,27 +42,29 @@ except Exception:
 class Stations(object):
     def on_get(self, req, resp, station=None):
         """Handles GET requests"""
-        # db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-        #                      user="root",         # your username
-        #                      passwd="",  # your password
-        #                      db="5trips")        # name of the data base
+        db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+                             user="root",         # your username
+                             db=DATABASE)        # name of the data base
+        #passwd="",  # your password
+        cur = db.cursor()
 
-        # cur = db.cursor()
-        #
-        # # Use all the SQL you like
-        # cur.execute("SELECT * FROM YOUR_TABLE_NAME")
-        #
-        # # print all the first cell of all the rows
-        # for row in cur.fetchall():
-        #     print row[0]
-        #
-        # db.close()
-        quote = {
-            'quote': 'I\'ve always been more interested in the future than in the past.',
-            'author': 'Grace Hopper'
-        }
-        # resp.content_type = 'application/x-yaml'
-        resp.body = yaml.dump(quote,default_flow_style=False)
+        # Use all the SQL you like
+        cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
+
+        msg = []
+
+        # print all the first cell of all the rows
+        for row in cur.fetchall():
+            print row[0]
+            msg.append(row)
+
+        db.close()
+        # quote = {
+        #     'quote': 'I\'ve always been more interested in the future than in the past.',
+        #     'author': 'Grace Hopper'
+        # }
+        resp.content_type = 'application/x-yaml'
+        resp.body = yaml.dump(msg, default_flow_style=False)
 
 
 class FileLoader(object):
