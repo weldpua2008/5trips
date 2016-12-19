@@ -117,3 +117,4 @@ api.add_route('/quote', QuoteResource())
 
 api.add_route('/index.html', FileLoader())
 api.add_route('/html/{dir_path}/{file_path}', FileLoader())
+
