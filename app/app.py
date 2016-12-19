@@ -37,8 +37,8 @@ except Exception:
     pass
 
 
-class QuoteResource:
-    def on_get(self, req, resp):
+class Stations(object):
+    def on_get(self, req, resp, station=None):
         """Handles GET requests"""
         # db = MySQLdb.connect(host="localhost",    # your host, usually localhost
         #                      user="root",         # your username
@@ -112,7 +112,7 @@ class FileLoader(object):
             resp.status = falcon.HTTP_404
 
 api = falcon.API()
-api.add_route('/quote', QuoteResource())
+api.add_route('/stations/{station}', Stations())
 
 
 api.add_route('/index.html', FileLoader())

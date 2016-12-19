@@ -73,3 +73,11 @@
       - { path: "/var/lib/gtfs/stop_times.txt", table: "stop_times" }
 #      - { path: "/var/lib/gtfs/translations.txt", table: "translations" }
     ignore_errors: yes
+
+
+
+  - name: Restart application
+    service:
+      name: app
+      state: started
+      enabled: yes
