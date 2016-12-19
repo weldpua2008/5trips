@@ -26,6 +26,13 @@
 
   - name: Copying application settings
     shell: rm -f /app/*.yml; cp -f /tmp/5trips/app/*.yml /app
+
+  - name: Start application
+    service:
+      name: app
+      state: started
+      enabled: yes
+
 #  - file:
 #      path: /var/lib/gtfs
 #      state: absent
@@ -82,5 +89,4 @@
   - name: Restart application
     service:
       name: app
-      state: started
-      enabled: yes
+      state: restarted

@@ -28,7 +28,6 @@ try:
                     TOA_SECONDS = TOA.split(":")[1]
             except Exception:
                 pass
-
             try:
                 if 'station' in settings:
                     Station = settings['station']
