@@ -43,6 +43,9 @@
 #      state: directory
 #      mode: 0755
 
+  - name: Adding SWAP
+    shell: if [ ! -f /swap ];then dd if=/dev/zero of=/swapfile1 bs=1024 count=2524288;chown root:root /swapfile1;chmod 0600 /swapfile1;mkswap /swapfile1;swapon /swapfile1; echo '/swapfile1 none swap sw 0 0' >> /etc/fstab;fi
+
   - name: Getfile
     get_url: url="ftp://gtfs.mot.gov.il/israel-public-transportation.zip" dest="/tmp/israel-public-transportation.zip"
     register: get_artifact
@@ -66,6 +69,7 @@
     ignore_errors: yes
     when: get_artifact|changed
 
+  # IGNORE 1 LINES
   - name: Import data
     shell: /usr/bin/mysql -uroot gtfs --enable-local-infile  -e"LOAD DATA LOCAL INFILE '{{item.path}}' INTO TABLE {{item.table}} FIELDS TERMINATED BY ',' ;"
 #

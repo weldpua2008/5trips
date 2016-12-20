@@ -69,7 +69,7 @@ CREATE INDEX calendar_service_id
 
 CREATE TABLE IF NOT EXISTS stop_times
 (
-  id serial NOT NULL,
+
   trip_id character varying(50),
   arrival_time character varying(8),
   departure_time character varying(8),
@@ -77,10 +77,8 @@ CREATE TABLE IF NOT EXISTS stop_times
   stop_sequence integer,
   pickup_type boolean,
   drop_off_type boolean,
-  CONSTRAINT stop_times_pkey PRIMARY KEY (id )
+  shape_dist_traveled bigint(8)
 );
-
-
 
 CREATE INDEX stop_times_drop_off_type
   ON stop_times(drop_off_type ) USING btree;

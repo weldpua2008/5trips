@@ -55,14 +55,28 @@ class Stations(object):
             numrows = cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
 
             if numrows > 0:
-                numrows = cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
+                # numrows = cur.execute("SELECT * FROM %s WHERE stop_id='%s'" % (STOPS_TABLE, station))
+                all_route_id=[]
+                numrows = cur.execute(
+                    """select distinct(routes.route_id), route_short_name, route_desc from routes
+join trips on trips.route_id = routes.route_id
+join stop_times on stop_times.trip_id = trips.trip_id
+where stop_times.stop_id = '%s' and stop_times.stop_id = '%s';
+""" % (station, Station))
                 # print all the first cell of all the rows
-                indx=0
                 for row in cur.fetchall():
-                    indx += 1
-                    msg["trip%s" % indx ] = row[0]
-                    if indx > 5:
-                        break
+                    all_route_id.append(row[0])
+
+
+                # TODO: filter rotes by arrival time
+
+                # TODO: Show only 5 directions
+                # indx=0
+                # for row in cur.fetchall():
+                #     indx += 1
+                #     msg["trip%s" % indx ] = row[0]
+                #     if indx > 5:
+                #         break
 
                 resp.status = falcon.HTTP_200
             else:
